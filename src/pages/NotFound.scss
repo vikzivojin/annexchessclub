@@ -1,0 +1,24 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.not-found {
+  @include section-padding;
+
+  &__inner {
+    @include container;
+    max-width: $max-width-narrow;
+    text-align: center;
+    padding-block: $space-9;
+  }
+
+  &__eyebrow {
+    @include eyebrow;
+    display: block;
+    margin-bottom: $space-4;
+  }
+
+  p {
+    font-size: $fs-md;
+    margin-bottom: $space-6;
+  }
+}

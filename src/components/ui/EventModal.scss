@@ -1,0 +1,226 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.event-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-5;
+  background: rgba(22, 24, 29, 0.55);
+}
+
+.event-modal {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - #{$space-7});
+  overflow-y: auto;
+  background: $color-paper;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  padding: $space-7;
+
+  @include breakpoint-up(md) {
+    max-width: 640px;
+    padding: $space-8;
+  }
+
+  @include breakpoint-up(lg) {
+    max-width: 800px;
+  }
+
+  h2 {
+    margin-bottom: $space-3;
+
+    @include breakpoint-up(md) {
+      font-size: $fs-2xl;
+    }
+  }
+}
+
+.event-modal__close {
+  @include button-reset;
+  position: absolute;
+  top: $space-4;
+  right: $space-4;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: $fs-xl;
+  line-height: 1;
+  color: $color-ink-soft;
+
+  &:hover {
+    background: $color-paper-dim;
+    color: $color-ink;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.event-modal__time {
+  @include eyebrow;
+  display: block;
+  margin-bottom: $space-2;
+}
+
+.event-modal__description {
+  color: $color-ink-soft;
+  margin-bottom: $space-5;
+
+  @include breakpoint-up(md) {
+    font-size: $fs-md;
+  }
+}
+
+.event-modal__details {
+  font-size: $fs-sm;
+  color: $color-ink;
+  margin-bottom: $space-5;
+
+  p,
+  div {
+    margin-bottom: $space-2;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  ul {
+    margin: $space-1 0 0;
+    padding-left: $space-5;
+    list-style: disc;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.event-modal__prices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-3;
+  margin-bottom: $space-5;
+
+  @include breakpoint-up(md) {
+    gap: $space-4;
+  }
+}
+
+.event-modal__price {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  padding: $space-4;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-md;
+  background: $color-paper-dim;
+
+  &.is-selected {
+    border-color: $color-accent;
+    background: $color-accent-soft;
+  }
+}
+
+.event-modal__price-label {
+  font-size: $fs-xs;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-ink-soft;
+}
+
+.event-modal__price-value {
+  font-family: $font-display;
+  font-size: $fs-lg;
+  color: $color-ink;
+}
+
+.event-modal__register {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-3;
+}
+
+.event-modal__confirm {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  width: 100%;
+}
+
+.event-modal__confirm-field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.event-modal__confirm-field label,
+.event-modal__confirm-label {
+  font-size: $fs-xs;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $color-ink-soft;
+}
+
+.event-modal__confirm-field select {
+  font: inherit;
+  padding: $space-3 $space-4;
+  border-radius: $radius-sm;
+  border: 1px solid $color-paper-line;
+  background: $color-paper;
+  color: $color-ink;
+  width: 100%;
+  max-width: 320px;
+}
+
+.event-modal__bye-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.event-modal__bye-option {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $fs-sm;
+  color: $color-ink;
+
+  input[type="checkbox"] {
+    width: auto;
+  }
+}
+
+.event-modal__confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  align-items: center;
+}
+
+.event-modal__note {
+  font-size: $fs-sm;
+  color: $color-ink-soft;
+  margin-bottom: 0;
+}
+
+.event-modal__note--success {
+  color: $color-success;
+}
+
+.event-modal__note--error {
+  color: #a13a3a;
+}

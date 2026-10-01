@@ -1,0 +1,68 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.about-grid {
+  display: grid;
+  gap: $space-7;
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: start;
+  }
+}
+
+.about-card {
+  background: $color-ink;
+  color: $color-on-dark;
+  border-radius: $radius-lg;
+  padding: $space-7;
+
+  h3 {
+    color: $color-on-dark;
+    font-size: $fs-lg;
+  }
+
+  p {
+    color: $color-on-dark-dim;
+  }
+
+  .btn--secondary {
+    color: $color-on-dark;
+    border-color: $color-on-dark;
+
+    &:hover {
+      background: $color-on-dark;
+      color: $color-ink;
+    }
+  }
+}
+
+.values-section {
+  background: $color-paper-dim;
+}
+
+.values-grid {
+  display: grid;
+  gap: $space-5;
+
+  @include breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  article {
+    background: $color-paper;
+    border: 1px solid $color-paper-line;
+    border-radius: $radius-md;
+    padding: $space-6;
+  }
+
+  h3 {
+    color: $color-accent-dark;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: $fs-sm;
+  }
+}

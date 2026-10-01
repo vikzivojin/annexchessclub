@@ -1,0 +1,84 @@
+rules_version = '2';
+
+// Paste this into Firebase console > Firestore Database > Rules, replacing
+// whatever is there, then click Publish.
+//
+// Model:
+//   members/{uid}        one doc per registered user, doc id == their auth uid
+//   schedule/{id}         admin-editable, publicly readable
+//   announcements/{id}    admin-editable, publicly readable
+//   eventRegistrations/{id}  one doc per person registering for a schedule
+//                            item; each member can only read/write their own
+//
+// A user is an admin when their own members/{uid} doc has role == "admin".
+// Bootstrapping the first admin: register normally on the site, then open
+// this project in the Firebase console, go to Firestore Database > Data,
+// find members/<your uid>, and change the "role" field from "member" to
+// "admin" by hand. Every admin after that can be promoted from the site's
+// admin portal instead.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/members/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/members/$(request.auth.uid)).data.role == "admin";
+    }
+
+    match /members/{uid} {
+      // Anyone signed in can read the member list (used by the admin
+      // portal and by a member's own account page). Writing your own
+      // profile is allowed only on creation (sign up) and only with role
+      // "member", a gender and date of birth present, and no membership
+      // granted yet (membership is set later by an admin, or eventually by
+      // Stripe), so nobody can hand themselves admin or a paid membership
+      // from the client.
+      // Admins can update any member's doc (used to change roles and to
+      // set membership level/expiry). A member can update their own doc
+      // only to toggle auto-renew.
+      allow read: if isSignedIn();
+      allow create: if isSelf(uid) &&
+        request.resource.data.role == "member" &&
+        request.resource.data.gender is string &&
+        request.resource.data.dateOfBirth is string &&
+        request.resource.data.membershipType == "none" &&
+        request.resource.data.membershipExpiresAt == null;
+      allow update: if isAdmin() ||
+        (isSelf(uid) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["autoRenew"]));
+      allow delete: if isAdmin();
+    }
+
+    match /schedule/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /announcements/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /eventRegistrations/{id} {
+      // Registering for a schedule item just records interest (no payment
+      // processing yet), so a signed-in user can create their own
+      // registration and read it back, but not anyone else's; admins can
+      // read and remove any registration.
+      allow read: if isAdmin() || (isSignedIn() && resource.data.uid == request.auth.uid);
+      allow create: if isSelf(request.resource.data.uid) &&
+        request.resource.data.scheduleItemId is string &&
+        request.resource.data.price is number &&
+        request.resource.data.isMember is bool;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+  }
+}

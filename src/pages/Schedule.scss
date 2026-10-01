@@ -1,0 +1,8 @@
+@use "../styles/variables" as *;
+
+.timeline__trigger {
+  @media (max-width: $bp-sm) {
+    grid-template-columns: 1fr;
+    gap: $space-2;
+  }
+}

@@ -1,0 +1,195 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+// Announcements ----------------------------------------------------------
+.announcements-bar {
+  background: $color-accent;
+  color: $color-ink;
+
+  &__inner {
+    @include container;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $space-3;
+    padding-block: $space-3;
+    font-size: $fs-sm;
+  }
+
+  &__label {
+    font-size: $fs-xs;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: $color-ink;
+    color: $color-paper;
+    padding: $space-1 $space-3;
+    border-radius: 999px;
+  }
+
+  p {
+    margin: 0;
+    color: $color-ink;
+  }
+}
+
+// Hero -----------------------------------------------------------------
+.hero {
+  background: linear-gradient(180deg, $color-paper-dim 0%, $color-paper 60%);
+  padding-block: $space-8;
+
+  @include breakpoint-up(md) {
+    padding-block: $space-9;
+  }
+
+  &__inner {
+    @include container;
+    display: grid;
+    gap: $space-8;
+    align-items: center;
+
+    @include breakpoint-up(lg) {
+      grid-template-columns: 1.2fr 1fr;
+    }
+  }
+
+  &__eyebrow {
+    @include eyebrow;
+    display: block;
+    margin-bottom: $space-4;
+  }
+
+  &__content {
+    max-width: 620px;
+
+    p {
+      font-size: $fs-md;
+      margin-bottom: $space-6;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-4;
+  }
+
+  &__visual {
+    display: none;
+    justify-content: center;
+
+    @include breakpoint-up(lg) {
+      display: flex;
+    }
+  }
+}
+
+// Quick facts strip ------------------------------------------------------
+.quick-facts {
+  background: $color-ink;
+  color: $color-on-dark;
+
+  &__inner {
+    @include container;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-6;
+    padding-block: $space-6;
+
+    @include breakpoint-up(md) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+.quick-fact {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  border-left: 2px solid $color-accent;
+  padding-left: $space-4;
+
+  &__label {
+    font-size: $fs-xs;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $color-on-dark-dim;
+  }
+
+  &__value {
+    font-family: $font-display;
+    font-size: $fs-lg;
+    color: $color-on-dark;
+  }
+}
+
+// Membership teaser ----------------------------------------------------------
+.membership-section {
+  &__grid {
+    display: grid;
+    gap: $space-7;
+
+    @include breakpoint-up(lg) {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+  }
+
+  &__cta {
+    @include container;
+    margin-top: $space-6;
+
+    a {
+      font-weight: 600;
+      color: $color-accent-dark;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 2px;
+    }
+  }
+}
+
+.benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+
+  li {
+    padding: $space-5;
+    background: $color-paper-dim;
+    border-radius: $radius-md;
+  }
+
+  h3 {
+    font-size: $fs-md;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: $fs-sm;
+  }
+}
+
+// CTA banner ------------------------------------------------------------
+.cta-banner {
+  background: $color-accent-soft;
+
+  &__inner {
+    @include container;
+    @include section-padding;
+    max-width: $max-width-narrow;
+    text-align: center;
+
+    h2 {
+      margin-bottom: $space-4;
+    }
+
+    p {
+      font-size: $fs-md;
+      margin-bottom: $space-6;
+    }
+  }
+
+  &__button {
+    border-color: $color-ink;
+  }
+}

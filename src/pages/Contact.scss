@@ -1,0 +1,53 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.contact-grid {
+  display: grid;
+  gap: $space-7;
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: start;
+  }
+}
+
+.contact-details {
+  dl {
+    display: flex;
+    flex-direction: column;
+    gap: $space-5;
+  }
+
+  dt {
+    @include eyebrow;
+    margin-bottom: $space-1;
+  }
+
+  dd {
+    margin: 0;
+    font-size: $fs-md;
+    color: $color-ink;
+
+    a {
+      color: $color-accent-dark;
+      font-weight: 600;
+    }
+  }
+}
+
+.contact-map {
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid $color-paper-line;
+  aspect-ratio: 4 / 3;
+
+  @include breakpoint-up(md) {
+    aspect-ratio: 16 / 10;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}

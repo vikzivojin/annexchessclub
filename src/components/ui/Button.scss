@@ -1,0 +1,57 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-3 $space-6;
+  font-size: $fs-sm;
+  font-weight: 600;
+  border-radius: $radius-sm;
+  border: 1px solid transparent;
+  transition: background $duration-fast $ease-standard, color $duration-fast $ease-standard,
+    border-color $duration-fast $ease-standard, transform $duration-fast $ease-standard;
+  cursor: pointer;
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &--primary {
+    background: $color-ink;
+    color: $color-paper;
+
+    &:hover {
+      background: $color-accent-dark;
+    }
+  }
+
+  &--secondary {
+    background: transparent;
+    color: $color-ink;
+    border-color: $color-ink;
+
+    &:hover {
+      background: $color-ink;
+      color: $color-paper;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $color-ink;
+    padding-inline: 0;
+
+    &:hover {
+      color: $color-accent-dark;
+    }
+  }
+}

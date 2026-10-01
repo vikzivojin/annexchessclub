@@ -1,0 +1,22 @@
+@use "../../styles/variables" as *;
+
+.chessboard-mark {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 420px;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-lg;
+  transform: rotate(-2deg);
+
+  span {
+    background: $color-paper;
+
+    &.is-dark {
+      background: $color-ink;
+    }
+  }
+}

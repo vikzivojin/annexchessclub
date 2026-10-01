@@ -1,0 +1,77 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.footer {
+  background: $color-surface-dark;
+  color: $color-on-dark-dim;
+
+  &__top {
+    @include container;
+    display: grid;
+    gap: $space-7;
+    padding-block: $space-8;
+    grid-template-columns: 1fr;
+
+    @include breakpoint-up(md) {
+      grid-template-columns: 1.6fr repeat(3, 1fr);
+    }
+  }
+
+  &__brand {
+    max-width: 320px;
+
+    p {
+      color: $color-on-dark-dim;
+      font-size: $fs-sm;
+    }
+  }
+
+  &__name {
+    display: block;
+    font-family: $font-display;
+    font-size: $fs-lg;
+    color: $color-on-dark;
+    margin-bottom: $space-3;
+  }
+
+  &__col {
+    h4 {
+      font-family: $font-body;
+      font-size: $fs-xs;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: $color-accent;
+      margin-bottom: $space-4;
+    }
+
+    address,
+    ul {
+      font-style: normal;
+      font-size: $fs-sm;
+      display: flex;
+      flex-direction: column;
+      gap: $space-2;
+    }
+
+    a {
+      color: $color-on-dark-dim;
+      transition: color $duration-fast $ease-standard;
+
+      &:hover {
+        color: $color-on-dark;
+      }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba(244, 241, 232, 0.1);
+
+    p {
+      @include container;
+      margin: 0;
+      padding-block: $space-5;
+      font-size: $fs-xs;
+      color: $color-on-dark-dim;
+    }
+  }
+}

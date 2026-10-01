@@ -1,0 +1,62 @@
+@use "variables" as *;
+
+@mixin breakpoint-up($name) {
+  @if $name == sm {
+    @media (min-width: $bp-sm) {
+      @content;
+    }
+  } @else if $name == md {
+    @media (min-width: $bp-md) {
+      @content;
+    }
+  } @else if $name == lg {
+    @media (min-width: $bp-lg) {
+      @content;
+    }
+  } @else if $name == xl {
+    @media (min-width: $bp-xl) {
+      @content;
+    }
+  }
+}
+
+@mixin container {
+  width: 100%;
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $space-5;
+
+  @include breakpoint-up(lg) {
+    padding-inline: $space-7;
+  }
+}
+
+@mixin section-padding {
+  padding-block: $space-8;
+
+  @include breakpoint-up(md) {
+    padding-block: $space-9;
+  }
+}
+
+@mixin focus-ring {
+  outline: 2px solid $color-accent;
+  outline-offset: 3px;
+}
+
+@mixin button-reset {
+  appearance: none;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+@mixin eyebrow {
+  font-family: $font-body;
+  font-size: $fs-xs;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $color-accent-dark;
+}

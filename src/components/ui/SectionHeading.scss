@@ -1,0 +1,28 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.section-heading {
+  max-width: $max-width-narrow;
+  margin-bottom: $space-7;
+
+  &__eyebrow {
+    @include eyebrow;
+    display: block;
+    margin-bottom: $space-3;
+  }
+
+  h2 {
+    margin-bottom: $space-3;
+  }
+
+  p {
+    font-size: $fs-md;
+    color: $color-ink-soft;
+    margin-bottom: 0;
+  }
+
+  &--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+}

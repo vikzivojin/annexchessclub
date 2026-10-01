@@ -1,0 +1,56 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.classes-grid {
+  display: grid;
+  gap: $space-5;
+
+  @include breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.class-card {
+  background: $color-paper;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-md;
+  padding: $space-6;
+  height: 100%;
+
+  h3 {
+    color: $color-accent-dark;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: $fs-sm;
+  }
+}
+
+.classes-cta {
+  background: $color-ink;
+  color: $color-on-dark;
+
+  h2 {
+    color: $color-on-dark;
+  }
+
+  p {
+    color: $color-on-dark-dim;
+    margin-bottom: 0;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: $space-6;
+    align-items: flex-start;
+
+    @include breakpoint-up(md) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}

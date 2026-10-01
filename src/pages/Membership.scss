@@ -1,0 +1,124 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.benefits-grid {
+  display: grid;
+  gap: $space-5;
+
+  @include breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.benefit-card {
+  background: $color-paper-dim;
+  border-radius: $radius-md;
+  padding: $space-6;
+
+  h3 {
+    color: $color-accent-dark;
+    margin-bottom: $space-2;
+    font-size: $fs-md;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: $fs-sm;
+  }
+}
+
+.pricing-grid {
+  display: grid;
+  gap: $space-5;
+
+  @include breakpoint-up(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.pricing-card {
+  background: $color-paper;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-md;
+  padding: $space-6;
+  text-align: center;
+
+  h3 {
+    font-size: $fs-lg;
+    margin-bottom: $space-3;
+  }
+
+  &__category {
+    @include eyebrow;
+    display: block;
+    margin-bottom: $space-2;
+  }
+
+  &__price {
+    font-family: $font-display;
+    font-size: $fs-xl;
+    color: $color-accent-dark;
+    margin-bottom: $space-2;
+
+    span {
+      font-family: inherit;
+      font-size: $fs-sm;
+      color: $color-ink-soft;
+      font-weight: 400;
+    }
+  }
+
+  &__label {
+    font-size: $fs-sm;
+    color: $color-ink-soft;
+    margin-bottom: 0;
+  }
+}
+
+.signup-section {
+  background: $color-paper-dim;
+}
+
+.signup-card {
+  display: grid;
+  gap: $space-7;
+  background: $color-paper;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-lg;
+  padding: $space-7;
+
+  @include breakpoint-up(lg) {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    margin-top: $space-5;
+    font-size: $fs-sm;
+
+    a {
+      color: $color-accent-dark;
+      font-weight: 600;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  &__note {
+    font-size: $fs-xs;
+    color: $color-ink-soft;
+    margin-bottom: 0;
+  }
+}

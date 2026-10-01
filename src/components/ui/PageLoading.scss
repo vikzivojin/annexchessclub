@@ -1,0 +1,26 @@
+@use "../../styles/variables" as *;
+
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  padding-block: $space-9;
+  color: $color-ink-soft;
+  font-size: $fs-sm;
+}
+
+.page-loading__spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid $color-paper-line;
+  border-top-color: $color-accent;
+  animation: page-loading-spin 700ms linear infinite;
+}
+
+@keyframes page-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

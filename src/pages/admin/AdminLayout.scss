@@ -1,0 +1,415 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.admin {
+  background: $color-paper-dim;
+  min-height: calc(100vh - 76px);
+
+  &__inner {
+    @include container;
+    display: grid;
+    gap: $space-6;
+    padding-block: $space-7;
+
+    @include breakpoint-up(md) {
+      grid-template-columns: 220px 1fr;
+      align-items: start;
+    }
+  }
+
+  &__sidebar {
+    background: $color-paper;
+    border: 1px solid $color-paper-line;
+    border-radius: $radius-md;
+    padding: $space-5;
+
+    @include breakpoint-up(md) {
+      position: sticky;
+      top: 96px;
+    }
+  }
+
+  &__sidebar-eyebrow {
+    @include eyebrow;
+    display: block;
+    margin-bottom: $space-4;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space-2;
+
+    @include breakpoint-up(md) {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+  }
+
+  nav a {
+    display: block;
+    padding: $space-2 $space-3;
+    border-radius: $radius-sm;
+    font-size: $fs-sm;
+    font-weight: 500;
+    color: $color-ink-soft;
+
+    &:hover {
+      background: $color-paper-dim;
+      color: $color-ink;
+    }
+
+    &.is-active {
+      background: $color-ink;
+      color: $color-paper;
+    }
+  }
+
+  &__content {
+    min-width: 0;
+  }
+}
+
+.admin-panel {
+  background: $color-paper;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-md;
+  padding: $space-6;
+  margin-bottom: $space-6;
+
+  h1,
+  h2 {
+    margin-bottom: $space-2;
+  }
+
+  &__lede {
+    color: $color-ink-soft;
+    font-size: $fs-sm;
+    margin-bottom: $space-5;
+  }
+
+  &__links {
+    margin-top: $space-6;
+    font-size: $fs-sm;
+
+    a {
+      color: $color-accent-dark;
+      font-weight: 600;
+    }
+  }
+}
+
+.admin-stats {
+  display: grid;
+  gap: $space-4;
+  grid-template-columns: repeat(2, 1fr);
+
+  @include breakpoint-up(sm) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  div {
+    background: $color-paper-dim;
+    border-radius: $radius-sm;
+    padding: $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  strong {
+    font-family: $font-display;
+    font-size: $fs-xl;
+    color: $color-ink;
+  }
+
+  span {
+    font-size: $fs-xs;
+    color: $color-ink-soft;
+  }
+}
+
+// Tables can have more columns (and wider controls, like the Membership
+// select) than fit a narrow viewport or sidebar layout. Scrolling the table
+// itself, rather than letting it push out past its container, keeps the
+// overflow contained instead of widening the whole admin page.
+.admin-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $fs-sm;
+
+  th,
+  td {
+    text-align: left;
+    padding: $space-3 $space-3;
+    border-bottom: 1px solid $color-paper-line;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  th {
+    font-size: $fs-xs;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $color-ink-soft;
+  }
+
+  select,
+  input[type="date"] {
+    font: inherit;
+    padding: $space-2 $space-3;
+    border-radius: $radius-sm;
+    border: 1px solid $color-paper-line;
+    background: $color-paper;
+    max-width: 220px;
+  }
+}
+
+.admin-badge {
+  display: inline-block;
+  margin-left: $space-2;
+  padding: 2px $space-2;
+  border-radius: 999px;
+  background: $color-accent-soft;
+  color: $color-accent-dark;
+  font-size: $fs-xs;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-form {
+  display: grid;
+  gap: $space-3;
+  max-width: 520px;
+  margin-bottom: $space-6;
+
+  label {
+    font-size: $fs-xs;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $color-ink-soft;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    padding: $space-3 $space-4;
+    border-radius: $radius-sm;
+    border: 1px solid $color-paper-line;
+    background: $color-paper;
+    color: $color-ink;
+    width: 100%;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  &__row {
+    display: grid;
+    gap: $space-3;
+
+    @include breakpoint-up(sm) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-3;
+    margin-top: $space-2;
+  }
+}
+
+.date-list-editor,
+.rounds-editor {
+  display: grid;
+  gap: $space-2;
+
+  > label {
+    font-size: $fs-xs;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $color-ink-soft;
+  }
+}
+
+.date-list-editor__items {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-2 $space-3;
+    background: $color-paper-dim;
+    border-radius: $radius-sm;
+    font-size: $fs-sm;
+  }
+}
+
+.date-list-editor__remove {
+  @include button-reset;
+  color: $color-ink-soft;
+  font-size: $fs-md;
+  line-height: 1;
+
+  &:hover {
+    color: #a13a3a;
+  }
+}
+
+.date-list-editor__add {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+
+  input[type="date"] {
+    width: auto;
+  }
+}
+
+.rounds-editor__list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.rounds-editor__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: $space-2;
+  align-items: center;
+
+  input,
+  select {
+    width: 100%;
+  }
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.admin-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-4;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-sm;
+
+  h3 {
+    font-size: $fs-md;
+    margin-bottom: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: $fs-sm;
+  }
+
+  &__meta {
+    font-size: $fs-xs;
+    color: $color-ink-soft;
+    margin-bottom: $space-2;
+  }
+
+  &.is-editing {
+    border-color: $color-accent;
+    background: $color-accent-soft;
+  }
+}
+
+.admin-status {
+  font-size: $fs-sm;
+  margin-top: $space-3;
+}
+
+.admin-status--error {
+  color: #a13a3a;
+}
+
+.admin-status--success {
+  color: $color-success;
+}
+
+.registrants-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-5;
+  background: rgba(22, 24, 29, 0.55);
+}
+
+.registrants-modal {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  max-height: calc(100vh - #{$space-7});
+  overflow-y: auto;
+  background: $color-paper;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  padding: $space-7;
+
+  @include breakpoint-up(md) {
+    max-width: 900px;
+    padding: $space-8;
+  }
+
+  h2 {
+    margin-bottom: $space-5;
+  }
+}
+
+.registrants-modal__close {
+  @include button-reset;
+  position: absolute;
+  top: $space-4;
+  right: $space-4;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: $fs-xl;
+  line-height: 1;
+  color: $color-ink-soft;
+
+  &:hover {
+    background: $color-paper-dim;
+    color: $color-ink;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.registrants-modal__summary {
+  margin-top: $space-5;
+  font-weight: 600;
+  color: $color-ink;
+}

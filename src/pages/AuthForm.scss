@@ -1,0 +1,91 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.auth-page {
+  @include section-padding;
+  background: $color-paper-dim;
+  min-height: 60vh;
+
+  &__inner {
+    @include container;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: $color-paper;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-lg;
+  padding: $space-7;
+  box-shadow: $shadow-md;
+
+  &__eyebrow {
+    @include eyebrow;
+    display: block;
+    margin-bottom: $space-3;
+  }
+
+  h1 {
+    margin-bottom: $space-2;
+  }
+
+  &__lede {
+    font-size: $fs-sm;
+    margin-bottom: $space-6;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  label {
+    font-size: $fs-xs;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $color-ink-soft;
+    margin-top: $space-3;
+  }
+
+  input,
+  select {
+    font: inherit;
+    font-size: $fs-md;
+    padding: $space-3 $space-4;
+    border-radius: $radius-sm;
+    border: 1px solid $color-paper-line;
+    background: $color-paper;
+    color: $color-ink;
+    margin-bottom: $space-1;
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  .btn {
+    margin-top: $space-5;
+  }
+
+  &__error {
+    color: #a13a3a;
+    font-size: $fs-sm;
+    margin: $space-2 0 0;
+  }
+
+  &__footer {
+    margin: $space-6 0 0;
+    font-size: $fs-sm;
+    color: $color-ink-soft;
+
+    a {
+      color: $color-accent-dark;
+      font-weight: 600;
+    }
+  }
+}

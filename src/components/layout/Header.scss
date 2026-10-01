@@ -1,0 +1,243 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 248, 243, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid $color-paper-line;
+
+  &__bar {
+    @include container;
+    display: flex;
+    align-items: center;
+    gap: $space-5;
+    min-height: 76px;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    margin-right: auto;
+    color: $color-ink;
+  }
+
+  &__brand-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-md;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  &__brand-name {
+    font-family: $font-display;
+    font-weight: 600;
+    font-size: $fs-md;
+    color: $color-ink;
+  }
+
+  &__brand-motto {
+    font-size: $fs-xs;
+    color: $color-ink-soft;
+    letter-spacing: 0.02em;
+  }
+
+  &__nav--desktop {
+    display: none;
+
+    @include breakpoint-up(lg) {
+      display: block;
+    }
+
+    ul {
+      display: flex;
+      align-items: center;
+      gap: $space-6;
+    }
+
+    a {
+      position: relative;
+      font-size: $fs-sm;
+      font-weight: 500;
+      color: $color-ink-soft;
+      padding-block: $space-2;
+      transition: color $duration-fast $ease-standard;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -2px;
+        height: 2px;
+        background: $color-accent;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform $duration-base $ease-standard;
+      }
+
+      &:hover {
+        color: $color-ink;
+      }
+
+      &.is-active {
+        color: $color-ink;
+
+        &::after {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
+  &__auth--desktop {
+    display: none;
+    align-items: center;
+    gap: $space-5;
+
+    @include breakpoint-up(lg) {
+      display: flex;
+    }
+  }
+
+  &__auth-link {
+    font-size: $fs-sm;
+    font-weight: 500;
+    color: $color-ink-soft;
+    transition: color $duration-fast $ease-standard;
+
+    &:hover,
+    &.is-active {
+      color: $color-ink;
+    }
+  }
+
+  &__cta {
+    display: none;
+
+    @include breakpoint-up(lg) {
+      display: inline-flex;
+      align-items: center;
+      background: $color-ink;
+      color: $color-paper;
+      font-size: $fs-sm;
+      font-weight: 600;
+      padding: $space-3 $space-5;
+      border-radius: $radius-sm;
+      transition: background $duration-fast $ease-standard, transform $duration-fast $ease-standard;
+
+      &:hover {
+        background: $color-accent-dark;
+      }
+
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
+
+  &__menu-toggle {
+    @include button-reset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+
+    @include breakpoint-up(lg) {
+      display: none;
+    }
+
+    span {
+      display: block;
+      height: 2px;
+      background: $color-ink;
+      border-radius: 2px;
+      transition: transform $duration-base $ease-standard, opacity $duration-fast $ease-standard;
+    }
+
+    &[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    &[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    &[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+
+  &__nav--mobile {
+    max-height: 0;
+    overflow: hidden;
+    background: $color-paper;
+    border-top: 1px solid transparent;
+    transition: max-height $duration-base $ease-standard;
+
+    @include breakpoint-up(lg) {
+      display: none;
+    }
+
+    &.is-open {
+      max-height: 480px;
+      border-top-color: $color-paper-line;
+    }
+
+    ul {
+      @include container;
+      display: flex;
+      flex-direction: column;
+      padding-block: $space-4;
+      gap: $space-1;
+    }
+
+    a {
+      display: block;
+      padding: $space-3 0;
+      font-size: $fs-md;
+      color: $color-ink-soft;
+      border-bottom: 1px solid $color-paper-line;
+
+      &.is-active {
+        color: $color-accent-dark;
+        font-weight: 600;
+      }
+    }
+
+    &__cta,
+    .header__cta--mobile {
+      border-bottom: none;
+    }
+  }
+
+  &__cta--mobile {
+    margin-top: $space-2;
+    text-align: center;
+    background: $color-ink;
+    color: $color-paper;
+    border-radius: $radius-sm;
+    font-weight: 600;
+  }
+}

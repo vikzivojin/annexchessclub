@@ -1,0 +1,94 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// Reused across Home, Schedule, Classes, and Membership pages so the
+// visual language stays consistent without repeating rules per file.
+
+.section {
+  @include section-padding;
+
+  &__inner {
+    @include container;
+  }
+}
+
+.divisions-grid {
+  display: grid;
+  gap: $space-5;
+
+  @include breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.division-card {
+  background: $color-paper-dim;
+  border: 1px solid $color-paper-line;
+  border-radius: $radius-md;
+  padding: $space-6;
+
+  h3 {
+    margin-bottom: $space-2;
+    color: $color-accent-dark;
+  }
+
+  p {
+    margin-bottom: 0;
+    font-size: $fs-sm;
+  }
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  max-width: $max-width-narrow;
+
+  li {
+    padding-bottom: $space-6;
+    border-bottom: 1px solid $color-paper-line;
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  &__trigger {
+    @include button-reset;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: $space-5;
+    width: 100%;
+    text-align: left;
+    padding: $space-2;
+    margin: -#{$space-2};
+    border-radius: $radius-sm;
+    transition: background $duration-fast $ease-standard;
+
+    &:hover {
+      background: $color-paper-dim;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  &__time {
+    font-family: $font-display;
+    font-size: $fs-md;
+    color: $color-accent-dark;
+  }
+
+  &__content {
+    h3 {
+      margin-bottom: $space-2;
+    }
+
+    p {
+      margin-bottom: 0;
+      font-size: $fs-sm;
+    }
+  }
+}
