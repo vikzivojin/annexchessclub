@@ -16,15 +16,14 @@ export type MembershipPlan = {
 // Prices are placeholders set directly by the club; once Stripe is wired
 // up these same figures drive what's actually charged at checkout.
 export const membershipPlans: MembershipPlan[] = [
-  { id: "casual-annual", label: "Annual Casual Membership", category: "casual", term: "annual", months: 12, price: 200 },
-  { id: "casual-half", label: "Half-Year Casual Membership", category: "casual", term: "half-year", months: 6, price: 100 },
+  { id: "casual-annual", label: "Annual Casual Membership", category: "casual", term: "annual", months: 12, price: 100 },
   {
     id: "tournament-annual",
     label: "Annual Tournament Membership",
     category: "tournament",
     term: "annual",
     months: 12,
-    price: 220,
+    price: 210,
   },
   {
     id: "tournament-half",

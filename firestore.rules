@@ -9,6 +9,11 @@ rules_version = '2';
 //   announcements/{id}    admin-editable, publicly readable
 //   eventRegistrations/{id}  one doc per person registering for a schedule
 //                            item; each member can only read/write their own
+//   mail/{id}             one doc per outgoing email, admin-created only;
+//                          watched by the Firebase "Trigger Email" extension,
+//                          which actually sends it and writes back a
+//                          delivery status using its own admin privileges
+//   emailCampaigns/{id}   admin-only history of bulk emails sent
 //
 // A user is an admin when their own members/{uid} doc has role == "admin".
 // Bootstrapping the first admin: register normally on the site, then open
@@ -44,7 +49,7 @@ service cloud.firestore {
       // from the client.
       // Admins can update any member's doc (used to change roles and to
       // set membership level/expiry). A member can update their own doc
-      // only to toggle auto-renew.
+      // only to toggle auto-renew or their email opt-out preferences.
       allow read: if isSignedIn();
       allow create: if isSelf(uid) &&
         request.resource.data.role == "member" &&
@@ -53,7 +58,9 @@ service cloud.firestore {
         request.resource.data.membershipType == "none" &&
         request.resource.data.membershipExpiresAt == null;
       allow update: if isAdmin() ||
-        (isSelf(uid) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["autoRenew"]));
+        (isSelf(uid) && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "autoRenew", "emailOptOutGeneral", "emailOptOutTournamentReminders", "emailOptOutRenewalReminders"
+        ]));
       allow delete: if isAdmin();
     }
 
@@ -79,6 +86,25 @@ service cloud.firestore {
         request.resource.data.isMember is bool;
       allow update: if false;
       allow delete: if isAdmin();
+    }
+
+    match /mail/{id} {
+      // Only the admin portal creates these, one per recipient, with the
+      // subject/body the admin wrote. The Trigger Email extension itself
+      // runs with admin-SDK privileges and isn't subject to these rules, so
+      // it can still read the doc and write back delivery status even
+      // though client reads/updates are locked down here.
+      allow read: if isAdmin();
+      allow create: if isAdmin() &&
+        request.resource.data.to is list &&
+        request.resource.data.message.subject is string;
+      allow update, delete: if false;
+    }
+
+    match /emailCampaigns/{id} {
+      allow read: if isAdmin();
+      allow create: if isAdmin();
+      allow update, delete: if false;
     }
   }
 }

@@ -6,6 +6,7 @@ const adminLinks = [
   { to: "/admin/members", label: "Members" },
   { to: "/admin/schedule", label: "Schedule" },
   { to: "/admin/announcements", label: "Announcements" },
+  { to: "/admin/email", label: "Email" },
 ];
 
 export function AdminLayout() {

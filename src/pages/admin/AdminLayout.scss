@@ -413,3 +413,13 @@
   font-weight: 600;
   color: $color-ink;
 }
+
+.admin-recipient-count {
+  font-size: $fs-sm;
+  color: $color-ink-soft;
+  margin-bottom: 0;
+}
+
+.admin-email-preview-body {
+  white-space: pre-wrap;
+}

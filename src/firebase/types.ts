@@ -6,7 +6,7 @@ export type MemberRole = "member" | "admin";
 export type Gender = "female" | "male" | "non-binary" | "prefer-not-to-say";
 
 // "none" means a registered account that hasn't paid for a membership yet.
-export type MembershipStatus = "none" | "casual-annual" | "casual-half" | "tournament-annual" | "tournament-half";
+export type MembershipStatus = "none" | "casual-annual" | "tournament-annual" | "tournament-half";
 
 export type MemberProfile = {
   uid: string;
@@ -21,6 +21,11 @@ export type MemberProfile = {
   membershipType: MembershipStatus;
   membershipExpiresAt: number | null; // epoch millis, null when there's no active membership
   autoRenew: boolean;
+  // Each defaults to false (opted in) at sign up. A member can opt out of
+  // any combination of these from their account page.
+  emailOptOutGeneral: boolean;
+  emailOptOutTournamentReminders: boolean;
+  emailOptOutRenewalReminders: boolean;
 };
 
 export type EventType = "tournament" | "class" | "meeting";
@@ -71,4 +76,21 @@ export type EventRegistration = {
   createdAt: number;
   section?: string; // tournament only — the section they're playing in
   byeRounds?: string[]; // tournament only — round labels the registrant is sitting out
+};
+
+// Which opt-out a bulk email is checked against: general club emails,
+// tournament reminders, or membership renewal reminders.
+export type EmailCategory = "general" | "tournament-reminder" | "renewal-reminder";
+
+// A record of a bulk email the admin sent, kept for history. The actual
+// delivery happens via the Firebase "Trigger Email" extension, which
+// watches the `mail` collection for documents this creates.
+export type EmailCampaign = {
+  id: string;
+  subject: string;
+  body: string;
+  category: EmailCategory;
+  recipientCount: number;
+  sentAt: number;
+  sentBy: string; // display name of the admin who sent it
 };

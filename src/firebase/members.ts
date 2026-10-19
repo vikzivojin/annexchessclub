@@ -40,6 +40,9 @@ export async function registerMember(input: RegisterMemberInput) {
     membershipType: "none",
     membershipExpiresAt: null,
     autoRenew: false,
+    emailOptOutGeneral: false,
+    emailOptOutTournamentReminders: false,
+    emailOptOutRenewalReminders: false,
   };
 
   await setDoc(doc(membersCollection, credential.user.uid), profile);
@@ -80,4 +83,16 @@ export function updateMembership(uid: string, membershipType: MembershipStatus, 
 // Firestore rules only allow this field to change via a self-update.
 export function setAutoRenew(uid: string, autoRenew: boolean) {
   return updateDoc(doc(membersCollection, uid), { autoRenew });
+}
+
+// Self-service: a member can opt in/out of each email category
+// independently. Firestore rules only allow these fields (plus autoRenew)
+// to change via a self-update.
+export function setEmailPreferences(
+  uid: string,
+  preferences: Partial<
+    Pick<MemberProfile, "emailOptOutGeneral" | "emailOptOutTournamentReminders" | "emailOptOutRenewalReminders">
+  >,
+) {
+  return updateDoc(doc(membersCollection, uid), preferences);
 }

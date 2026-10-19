@@ -1,17 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { logoutMember, setAutoRenew } from "../firebase/members";
+import { logoutMember, setAutoRenew, setEmailPreferences } from "../firebase/members";
 import { Button } from "../components/ui/Button";
 import { formatGender } from "../data/profile";
 import { formatMembershipLabel, getPlanById, getPlanPrice, isDiscountEligible } from "../data/membership";
+import type { MemberProfile } from "../firebase/types";
 import "./Account.scss";
+
+type EmailOptOutField = "emailOptOutGeneral" | "emailOptOutTournamentReminders" | "emailOptOutRenewalReminders";
+
+const emailOptOutOptions: { field: EmailOptOutField; label: string }[] = [
+  { field: "emailOptOutGeneral", label: "Opt out of general club emails" },
+  { field: "emailOptOutTournamentReminders", label: "Opt out of tournament reminders" },
+  { field: "emailOptOutRenewalReminders", label: "Opt out of renewal reminders" },
+];
 
 export function Account() {
   const { user, profile, isAdmin, refreshProfile } = useAuth();
   const navigate = useNavigate();
   const [savingAutoRenew, setSavingAutoRenew] = useState(false);
   const [autoRenewError, setAutoRenewError] = useState<string | null>(null);
+  const [savingEmailPref, setSavingEmailPref] = useState<EmailOptOutField | null>(null);
+  const [emailPrefError, setEmailPrefError] = useState<string | null>(null);
 
   const handleLogout = async () => {
     await logoutMember();
@@ -29,6 +40,20 @@ export function Account() {
       setAutoRenewError("Couldn't update that. Please try again.");
     } finally {
       setSavingAutoRenew(false);
+    }
+  };
+
+  const handleEmailPrefToggle = async (field: EmailOptOutField, checked: boolean) => {
+    if (!profile) return;
+    setSavingEmailPref(field);
+    setEmailPrefError(null);
+    try {
+      await setEmailPreferences(profile.uid, { [field]: checked } as Partial<MemberProfile>);
+      await refreshProfile();
+    } catch {
+      setEmailPrefError("Couldn't update that. Please try again.");
+    } finally {
+      setSavingEmailPref(null);
     }
   };
 
@@ -120,6 +145,29 @@ export function Account() {
                   <dd>{profile.fideId || "Not provided"}</dd>
                 </div>
               </dl>
+            )}
+          </div>
+
+          <div className="account-card">
+            <h2>Email preferences</h2>
+            {profile && (
+              <>
+                <p className="account-card__note">
+                  By default you'll receive all club emails. Opt out of any you don't want below.
+                </p>
+                {emailOptOutOptions.map(({ field, label }) => (
+                  <label className="account-checkbox" key={field}>
+                    <input
+                      type="checkbox"
+                      checked={profile[field]}
+                      disabled={savingEmailPref === field}
+                      onChange={(event) => handleEmailPrefToggle(field, event.target.checked)}
+                    />
+                    {label}
+                  </label>
+                ))}
+                {emailPrefError && <p className="admin-status admin-status--error">{emailPrefError}</p>}
+              </>
             )}
           </div>
 

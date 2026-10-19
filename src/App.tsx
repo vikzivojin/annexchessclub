@@ -25,6 +25,7 @@ const AdminSchedule = lazy(() => import("./pages/admin/AdminSchedule").then((m) 
 const AdminAnnouncements = lazy(() =>
   import("./pages/admin/AdminAnnouncements").then((m) => ({ default: m.AdminAnnouncements })),
 );
+const AdminEmail = lazy(() => import("./pages/admin/AdminEmail").then((m) => ({ default: m.AdminEmail })));
 
 function App() {
   return (
@@ -85,6 +86,14 @@ function App() {
             element={
               <Suspense fallback={<PageLoading />}>
                 <AdminAnnouncements />
+              </Suspense>
+            }
+          />
+          <Route
+            path="email"
+            element={
+              <Suspense fallback={<PageLoading />}>
+                <AdminEmail />
               </Suspense>
             }
           />
